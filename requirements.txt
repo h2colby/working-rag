@@ -1,0 +1,50 @@
+# Web Framework and Server
+fastapi==0.103.2
+flask==3.1.0
+uvicorn==0.33.0
+starlette==0.27.0
+werkzeug==3.1.0
+
+# Environment and Configuration
+python-dotenv==1.0.1
+
+# AI and Machine Learning
+torch==2.2.1
+transformers==4.47.0
+openai==1.5.0
+tiktoken==0.8.0
+langchain==0.2.5
+langchain-core==0.2.8
+langchain-text-splitters==0.2.1
+
+# LlamaIndex and Related
+llama-index>=0.9.0
+llama-index-core>=0.10.68
+llama-hub==0.0.45
+llama-index-vector-stores-pinecone==0.1.2
+
+# Vector Store
+pinecone-client>=3.0.2,<4.0.0
+
+# Data Processing
+numpy==1.26.4
+pandas==2.2.3
+nltk==3.9.1
+beautifulsoup4==4.12.3
+html2text==2024.2.26
+striprtf==0.0.26
+
+# Utilities
+tenacity==8.5.0
+pydantic==1.10.19
+typing-extensions>=4.8.0,<5.0
+dataclasses-json==0.6.7
+requests==2.32.3
+aiohttp==3.11.10
+httpx==0.28.1
+
+# Database
+SQLAlchemy==2.0.24
+
+# Flask-CORS
+flask-cors==4.0.0

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RAG Chat Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #chat {
+            margin: 20px auto;
+            padding: 15px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 400px;
+            overflow-y: auto;
+            width: 80%;
+        }
+        .message {
+            margin-bottom: 15px;
+        }
+        .message strong {
+            display: inline-block;
+            min-width: 60px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        button {
+            background: #007BFF;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .input-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>RAG Chat Interface</h1>
+    <div id="chat"></div>
+    <div class="input-container">
+        <input type="text" id="question" placeholder="Ask something..." />
+        <button onclick="askQuestion()">Send</button>
+    </div>
+    <script>
+        async function askQuestion() {
+            const question = document.getElementById('question').value;
+            const chatDiv = document.getElementById('chat');
+        
+            // Append user's question to the chat
+            chatDiv.innerHTML += `<div class="message"><strong>You:</strong> ${question}</div>`;
+        
+            try {
+                // Make POST request to server
+                const response = await fetch('/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: question })
+                });
+        
+                const data = await response.json();
+        
+                if (data.error) {
+                    chatDiv.innerHTML += `<div class="message"><strong>Error:</strong> ${data.error}</div>`;
+                } else {
+                    // Use final_response as that's what the server sends
+                    const botResponse = data.final_response || "No response generated.";
+                    chatDiv.innerHTML += `<div class="message"><strong>Bot:</strong> ${botResponse}</div>`;
+                }
+            } catch (err) {
+                chatDiv.innerHTML += `<div class="message"><strong>Error:</strong> Failed to fetch response.</div>`;
+            }
+        
+            // Clear the input field
+            document.getElementById('question').value = '';
+        
+            // Auto-scroll to the bottom of the chat
+            chatDiv.scrollTop = chatDiv.scrollHeight;
+        }
+    </script>
+</body>
+</html>
